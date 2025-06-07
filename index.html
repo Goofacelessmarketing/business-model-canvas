@@ -1,101 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Business Model Canvas Report</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Business Model Canvas</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-    .canvas-section {
-      margin-bottom: 20px;
-    }
-    .section-title {
-      font-weight: bold;
-      font-size: 1.2em;
-      margin-bottom: 5px;
-    }
-    .section-content {
       padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      background-color: #f9f9f9;
+      margin: 0;
+      background-color: #f2f2f2;
+    }
+    h1 {
+      text-align: center;
+    }
+    #canvas {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 150px);
+      gap: 10px;
+      max-width: 900px;
+      margin: 20px auto;
+    }
+    .box {
+      background: white;
+      padding: 10px;
+      border: 1px solid #ccc;
+      overflow: auto;
+    }
+    .box h3 {
+      margin-top: 0;
+    }
+    .editable {
+      min-height: 80px;
+      padding: 5px;
+      border: 1px dashed #999;
+      background: #fff;
     }
     #downloadBtn {
-      margin-top: 30px;
+      display: block;
+      margin: 20px auto;
       padding: 10px 20px;
-      background-color: #007aff;
+      background: #4CAF50;
       color: white;
       border: none;
       border-radius: 5px;
       font-size: 16px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-
-  <h1>Business Model Canvas Report</h1>
-
-  <div id="canvasContent">
-    <div class="canvas-section">
-      <div class="section-title">Key Partners</div>
-      <div class="section-content">Apple Store, Grab, Boost, McDonald’s</div>
-    </div>
-    <div class="canvas-section">
-      <div class="section-title">Key Activities</div>
-      <div class="section-content">Data analytics, Ad tracking, Customer behavior analysis</div>
-    </div>
-    <div class="canvas-section">
-      <div class="section-title">Value Propositions</div>
-      <div class="section-content">Free deals & cashbacks; AI recommendations; Quick purchase access</div>
-    </div>
-    <div class="canvas-section">
-      <div class="section-title">Customer Relationships</div>
-      <div class="section-content">Loyalty points; Easy customer service; Personalized offers</div>
-    </div>
-    <div class="canvas-section">
-      <div class="section-title">Customer Segments</div>
-      <div class="section-content">Smartphone users, Students, Commuters, Coffee lovers</div>
-    </div>
-    <div class="canvas-section">
-      <div class="section-title">Key Resources</div>
-      <div class="section-content">App developers, Servers, AI engine, Customer data</div>
-    </div>
-    <div class="canvas-section">
-      <div class="section-title">Channels</div>
-      <div class="section-content">Mobile app (iOS & Android), App Store, Google Play</div>
-    </div>
-    <div class="canvas-section">
-      <div class="section-title">Cost Structure</div>
-      <div class="section-content">Marketing, App development, Server maintenance, Salaries</div>
-    </div>
-    <div class="canvas-section">
-      <div class="section-title">Revenue Streams</div>
-      <div class="section-content">Commissions from partners, Ads, Premium features</div>
-    </div>
+  <h1>Business Model Canvas</h1>
+  <div id="canvas">
+    <div class="box"><h3>Key Partners</h3><div contenteditable="true" class="editable"></div></div>
+    <div class="box"><h3>Key Activities</h3><div contenteditable="true" class="editable"></div></div>
+    <div class="box"><h3>Value Propositions</h3><div contenteditable="true" class="editable"></div></div>
+    <div class="box"><h3>Customer Relationships</h3><div contenteditable="true" class="editable"></div></div>
+    <div class="box"><h3>Customer Segments</h3><div contenteditable="true" class="editable"></div></div>
+    <div class="box"><h3>Key Resources</h3><div contenteditable="true" class="editable"></div></div>
+    <div class="box"><h3>Channels</h3><div contenteditable="true" class="editable"></div></div>
+    <div class="box"><h3>Cost Structure</h3><div contenteditable="true" class="editable"></div></div>
+    <div class="box"><h3>Revenue Streams</h3><div contenteditable="true" class="editable"></div></div>
   </div>
+  <button id="downloadBtn">Download Canvas as Image</button>
 
-  <button id="downloadBtn" onclick="downloadPDF()">Download PDF</button>
-
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
-    function downloadPDF() {
-      const element = document.getElementById('canvasContent');
-      html2pdf()
-        .from(element)
-        .set({
-          margin: 0.5,
-          filename: 'business_model_canvas.pdf',
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2 },
-          jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-        })
-        .save();
-    }
+    document.getElementById('downloadBtn').addEventListener('click', function () {
+      html2canvas(document.getElementById('canvas')).then(function (canvas) {
+        const link = document.createElement('a');
+        link.download = 'business_model_canvas.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      });
+    });
   </script>
-
 </body>
 </html>
-
-
