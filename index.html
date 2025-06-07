@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Business Model Canvas Report</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .canvas-section {
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-weight: bold;
+      font-size: 1.2em;
+      margin-bottom: 5px;
+    }
+    .section-content {
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background-color: #f9f9f9;
+    }
+    #downloadBtn {
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #007aff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Business Model Canvas Report</h1>
+
+  <div id="canvasContent">
+    <div class="canvas-section">
+      <div class="section-title">Key Partners</div>
+      <div class="section-content">Apple Store, Grab, Boost, McDonald’s</div>
+    </div>
+    <div class="canvas-section">
+      <div class="section-title">Key Activities</div>
+      <div class="section-content">Data analytics, Ad tracking, Customer behavior analysis</div>
+    </div>
+    <div class="canvas-section">
+      <div class="section-title">Value Propositions</div>
+      <div class="section-content">Free deals & cashbacks; AI recommendations; Quick purchase access</div>
+    </div>
+    <div class="canvas-section">
+      <div class="section-title">Customer Relationships</div>
+      <div class="section-content">Loyalty points; Easy customer service; Personalized offers</div>
+    </div>
+    <div class="canvas-section">
+      <div class="section-title">Customer Segments</div>
+      <div class="section-content">Smartphone users, Students, Commuters, Coffee lovers</div>
+    </div>
+    <div class="canvas-section">
+      <div class="section-title">Key Resources</div>
+      <div class="section-content">App developers, Servers, AI engine, Customer data</div>
+    </div>
+    <div class="canvas-section">
+      <div class="section-title">Channels</div>
+      <div class="section-content">Mobile app (iOS & Android), App Store, Google Play</div>
+    </div>
+    <div class="canvas-section">
+      <div class="section-title">Cost Structure</div>
+      <div class="section-content">Marketing, App development, Server maintenance, Salaries</div>
+    </div>
+    <div class="canvas-section">
+      <div class="section-title">Revenue Streams</div>
+      <div class="section-content">Commissions from partners, Ads, Premium features</div>
+    </div>
+  </div>
+
+  <button id="downloadBtn" onclick="downloadPDF()">Download PDF</button>
+
+  <script>
+    function downloadPDF() {
+      const element = document.getElementById('canvasContent');
+      html2pdf()
+        .from(element)
+        .set({
+          margin: 0.5,
+          filename: 'business_model_canvas.pdf',
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+        })
+        .save();
+    }
+  </script>
+
+</body>
+</html>
+
+
