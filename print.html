@@ -19,12 +19,6 @@
     .line {
       margin-bottom: 10px;
     }
-    .btn-print {
-      display: block;
-      margin: 20px auto;
-      padding: 10px 20px;
-      font-size: 16px;
-    }
   </style>
 </head>
 <body>
@@ -32,15 +26,8 @@
   <div class="report" id="reportContainer">
     <!-- Data will be injected here -->
   </div>
-  <button class="btn-print" onclick="window.print()">Print / Save PDF</button>
 
   <script>
-    // Extract data from query string
-    function getQueryParam(param) {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(param);
-    }
-
     function renderReport(data) {
       const container = document.getElementById('reportContainer');
       container.innerHTML = `
@@ -51,18 +38,24 @@
       `;
     }
 
-    // Parse and render
-    const rawData = getQueryParam('data');
-    if (rawData) {
+    window.onload = function () {
+      const params = new URLSearchParams(window.location.search);
+      const rawData = params.get("data");
+
+      if (!rawData) {
+        document.getElementById('reportContainer').innerHTML = 'No data provided';
+        return;
+      }
+
       try {
-        const parsed = JSON.parse(decodeURIComponent(rawData));
-        renderReport(parsed);
+        const data = JSON.parse(decodeURIComponent(rawData));
+        renderReport(data);
+        // Automatically trigger print after short delay
+        setTimeout(() => window.print(), 500);
       } catch (e) {
         document.getElementById('reportContainer').innerHTML = 'Invalid data format';
       }
-    } else {
-      document.getElementById('reportContainer').innerHTML = 'No data provided';
-    }
+    };
   </script>
 </body>
 </html>
