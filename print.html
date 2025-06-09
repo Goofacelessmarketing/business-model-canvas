@@ -1,1 +1,68 @@
-<html><head><meta content="text/html; charset=UTF-8" http-equiv="content-type"><style type="text/css">ol{margin:0;padding:0}table td,table th{padding:0}.c1{color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:11pt;font-family:"Arial";font-style:normal}.c0{padding-top:0pt;padding-bottom:0pt;line-height:1.15;orphans:2;widows:2;text-align:left}.c2{background-color:#ffffff;max-width:468pt;padding:72pt 72pt 72pt 72pt}.c3{height:11pt}.title{padding-top:0pt;color:#000000;font-size:26pt;padding-bottom:3pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}.subtitle{padding-top:0pt;color:#666666;font-size:15pt;padding-bottom:16pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}li{color:#000000;font-size:11pt;font-family:"Arial"}p{margin:0;color:#000000;font-size:11pt;font-family:"Arial"}h1{padding-top:20pt;color:#000000;font-size:20pt;padding-bottom:6pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h2{padding-top:18pt;color:#000000;font-size:16pt;padding-bottom:6pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h3{padding-top:16pt;color:#434343;font-size:14pt;padding-bottom:4pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h4{padding-top:14pt;color:#666666;font-size:12pt;padding-bottom:4pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h5{padding-top:12pt;color:#666666;font-size:11pt;padding-bottom:4pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;orphans:2;widows:2;text-align:left}h6{padding-top:12pt;color:#666666;font-size:11pt;padding-bottom:4pt;font-family:"Arial";line-height:1.15;page-break-after:avoid;font-style:italic;orphans:2;widows:2;text-align:left}</style></head><body class="c2 doc-content"><p class="c0"><span class="c1">&lt;!DOCTYPE html&gt;</span></p><p class="c0"><span class="c1">&lt;html&gt;</span></p><p class="c0"><span class="c1">&lt;head&gt;</span></p><p class="c0"><span class="c1">&nbsp; &lt;title&gt;Print Goals&lt;/title&gt;</span></p><p class="c0"><span class="c1">&lt;/head&gt;</span></p><p class="c0"><span class="c1">&lt;body&gt;</span></p><p class="c0"><span class="c1">&nbsp; &lt;h1&gt;Nutrition Goals&lt;/h1&gt;</span></p><p class="c0"><span class="c1">&nbsp; &lt;div id=&quot;goalsOutput&quot;&gt;&lt;/div&gt;</span></p><p class="c0 c3"><span class="c1"></span></p><p class="c0"><span class="c1">&nbsp; &lt;script&gt;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; const params = new URLSearchParams(window.location.search);</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; const goals = params.get(&quot;goals&quot;);</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; if (goals) {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; document.getElementById(&quot;goalsOutput&quot;).innerText = decodeURIComponent(goals);</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; } else {</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; &nbsp; document.getElementById(&quot;goalsOutput&quot;).innerText = &quot;No goals received.&quot;;</span></p><p class="c0"><span class="c1">&nbsp; &nbsp; }</span></p><p class="c0"><span class="c1">&nbsp; &lt;/script&gt;</span></p><p class="c0"><span class="c1">&lt;/body&gt;</span></p><p class="c0"><span class="c1">&lt;/html&gt;</span></p><p class="c0 c3"><span class="c1"></span></p><p class="c0 c3"><span class="c1"></span></p></body></html>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Printable Report</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+    }
+    .report {
+      max-width: 600px;
+      margin: auto;
+      border: 1px solid #ccc;
+      padding: 20px;
+    }
+    .line {
+      margin-bottom: 10px;
+    }
+    .btn-print {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Nutrition Goal Report</h2>
+  <div class="report" id="reportContainer">
+    <!-- Data will be injected here -->
+  </div>
+  <button class="btn-print" onclick="window.print()">Print / Save PDF</button>
+
+  <script>
+    // Extract data from query string
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    function renderReport(data) {
+      const container = document.getElementById('reportContainer');
+      container.innerHTML = `
+        <div class="line"><strong>Calories:</strong> ${data.calories}</div>
+        <div class="line"><strong>Protein:</strong> ${data.protein}</div>
+        <div class="line"><strong>Carbs:</strong> ${data.carbs}</div>
+        <div class="line"><strong>Fat:</strong> ${data.fat}</div>
+      `;
+    }
+
+    // Parse and render
+    const rawData = getQueryParam('data');
+    if (rawData) {
+      try {
+        const parsed = JSON.parse(decodeURIComponent(rawData));
+        renderReport(parsed);
+      } catch (e) {
+        document.getElementById('reportContainer').innerHTML = 'Invalid data format';
+      }
+    } else {
+      document.getElementById('reportContainer').innerHTML = 'No data provided';
+    }
+  </script>
+</body>
+</html>
